@@ -1,0 +1,100 @@
+-----------------------------------
+-----------------------------------
+-- ORACLE DATABASE SQL - 1Z0-071 --
+-----------------------------------
+-----------------------------------
+
+
+-----------------------------------
+-- USING BASIC SELECT STATEMENTS --
+-----------------------------------
+
+-- Use a basic SELECT statement to retreive all records from a table
+SELECT * FROM Employees;
+
+-- Select only desired columns
+SELECT Employee_ID, First_Name, Last_Name
+FROM Employees
+WHERE Hire_Date >= '08-01-01' -- 1st January 2008
+ORDER BY Hire_Date Desc;
+
+-- Statement with the calculation of 500x12 first (equals 600),
+-- then adds 6000 to the salary
+
+SELECT Employee_ID, First_Name, Last_Name, Salary, (Salary + 500) * 12
+FROM Employees;
+
+-- Literal characters can aslso begit the select list
+SELECT 'Employee: ' || First_Name || ', ' || Last_Name || ' - Salary: ' || Salary AS "Payment"
+FROM Employees;
+
+-- Find all employees with salary between and order from the highest
+SELECT * FROM Employees
+WHERE Salary >= 10000 AND SALARY <= 20000 -- Alternative BETWEEN 10000 AND 20000
+ORDER BY Salary DESC;
+
+-------------------------------------
+-- Data Definintion Language (DDL) --
+-------------------------------------
+
+-- Creating Customer table
+CREATE TABLE Customers(
+	cust_id NUMBER(4),
+	fn VARCHAR(25),
+	ln VARCHAR(25),
+	street VARCHAR(30),
+	city VARCHAR(25),
+	state_prov CHAR(2),
+	create_date Date
+);
+
+-- Creating a table with subquery
+CREATE TABLE Finance_Department
+AS
+SELECT employee_id, ln, (salary*12) AS "Annual Salary"
+FROM Employees
+WHERE department_id = 100;
+COMMIT;
+
+-------------------------------------
+--------- MANIPULATING DATA ---------
+-------------------------------------
+
+-- Insert a null
+INSERT INTO DEPARTMENTS (DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
+VALUES (350, 'Test Dep', null, 1700)
+
+-- Inserting special values
+INSERT INTO EMPLOYEES(EMPLOYEE_ID, FN, LN, EMIAL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISION_PCT, MANAGER_ID,DEPARTMENT_ID)
+VALUES((250, 'Test', 'Employee', 'TEMPLOYEE', '123.456.789', SYSDATE, 'AC_MGR,10000, .25, 101, 110
+
+-- Updating a value
+UPDATE DEPARTMENTS
+SET DEPARTMENT_NAME = 'Research and Development'
+WHERE DEPARTMENT_ID = 350;
+
+-- Delete all records from the table
+DELETE FROM DEPARTMENTS;
+
+-- Undo the delete opeartion
+ROLLBACK;
+
+-- Commit the delete operation
+COMMIT;
+
+-- Using a SAVEPOINT
+SELECT * FROM DEPARTMENTS;
+
+-- Insert a new record
+INSERT INTO DEPARTMENTS VALUES(360, 'Quality Control', null, null);
+
+-- Create a savepoint to 'protect' the new record
+SAVEPOINT after_insert;
+
+-- Delete an existing record
+DLETE FROM DEPARTMENTS
+WHERE DEPARTMENT_ID = 350;
+
+-- Discard the delete opearation without discarding the earlier insert opeartion
+ROLLBACK TO after_insert;
+
