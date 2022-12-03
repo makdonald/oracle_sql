@@ -1,0 +1,260 @@
+
+----------------------------
+--------- Ex1 --------------
+----------------------------
+
+-- Create SALES_TRANSACTIONS table
+
+CREATE TABLE SALES_TRANSACTIONS(
+	saleID NUMBER(4) PRIMARY KEY,
+	item VARCHAR(30),
+	unit_price NUMBER(4),
+	date_of_sale DATE
+);
+
+-- Insert values to SALES_TRANSACTIONS table
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(1, 'Cappuccino', 2.50, DATE '2015-03-30');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(2, 'Sandwich', 3.00, DATE '2015-03-30');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(3, 'Yougurt', 1.60, DATE '2015-03-30');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(4, 'Chocolate Snack Bar', 1.00, DATE '2015-03-30');
+
+-- Create the SALES_ANALYSIS table. The columns should be identical to 
+-- those of the SALES_TRANSACTIONS table.
+
+CREATE TABLE SALES_ANALYSIS(
+	saleID NUMBER(4) PRIMARY KEY,
+	item VARCHAR(30),
+	unit_price NUMBER(4),
+	date_of_sale DATE
+);
+
+-- Write a query that inserts all the rows from the SALES_TRANSACTIONS
+-- table into the SALES_ANALYSIS table
+
+INSERT ALL
+	INTO SALES_ANALYSIS VALUES (saleID, item, unit_price, date_of_sale)
+
+SELECT saleID, item, unit_price, date_of_sale
+FROM SALES_TRANSACTIONS;
+
+
+----------------------------
+--------- Ex2 --------------
+----------------------------
+
+-- Insert new transactions
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(45, 'Latte', 2.50, DATE '2015-02-02');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(46, 'Sandwich', 3.00, DATE '2015-02-02');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(47, 'Yogurt', 1.60, DATE '2015-02-02');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(48, 'Chocolate Muffin', 1.00, DATE '2015-02-02');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(78, 'Latte', 2.50, DATE '2017-07-06');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(79, 'Sandwich', 3.00, DATE '2017-07-06');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(80, 'Yogurt', 1.60, DATE '2017-07-06');
+
+INSERT INTO SALES_TRANSACTIONS(saleID, item, unit_price, date_of_sale)
+VALUES(81, 'Fruit Muffin', 1.00, DATE '2017-07-06');
+
+-- CREATE 3 tables:
+-- SALES_ANALYSIS_2015
+-- SALES_ANALYSIS_2016
+-- SALES_ANALYSIS_2017
+
+CREATE TABLE SALES_ANALYSIS_2015(
+	saleID NUMBER(4) PRIMARY KEY,
+	item VARCHAR(30),
+	unit_price NUMBER(4),
+	date_of_sale DATE
+);
+
+CREATE TABLE SALES_ANALYSIS_2016(
+	saleID NUMBER(4) PRIMARY KEY,
+	item VARCHAR(30),
+	unit_price NUMBER(4),
+	date_of_sale DATE
+);
+
+CREATE TABLE SALES_ANALYSIS_2017(
+	saleID NUMBER(4) PRIMARY KEY,
+	item VARCHAR(30),
+	unit_price NUMBER(4),
+	date_of_sale DATE
+);
+
+-- Write a query that inserts rows from the SALES_TRANSACTIONS table into each of
+-- the above tables based on the value for year in the date_of_sale field
+
+INSERT FIRST
+
+WHEN DATE_OF_SALE BETWEEN DATE'2015-01-01' AND DATE'2015-12-31' THEN
+	INTO SALES_ANALYSIS_2015 VALUES (saleID, item, unit_price, date_of_sale)
+
+
+WHEN DATE_OF_SALE BETWEEN DATE'2016-01-01' AND DATE'2016-12-31' THEN
+	INTO SALES_ANALYSIS_2016 VALUES (saleID, item, unit_price, date_of_sale)
+
+WHEN DATE_OF_SALE BETWEEN DATE'2017-01-01' AND DATE'2017-12-31' THEN
+	INTO SALES_ANALYSIS_2017 VALUES (saleID, item, unit_price, date_of_sale)
+
+SELECT saleID, item, unit_price, date_of_sale
+FROM SALES_TRANSACTIONS;
+
+----------------------------
+--------- Ex3 --------------
+----------------------------
+
+-- Create Equipment table
+
+CREATE TABLE EQUIPMENT(
+	equipmentID NUMBER(4) PRIMARY KEY,
+	type VARCHAR(50),
+	isUderWarranty VARCHAR(10),
+	warrantyStartDate DATE,
+	warrantyEndDate DATE
+);
+
+-- Insert values to the table
+
+INSERT INTO EQUIPMENT (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+VALUES (1, 'Refrigerator', 'Yes', DATE '2015-03-01', DATE '2022-02-28');
+
+INSERT INTO EQUIPMENT (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+VALUES (2, 'Cash Till', 'No', DATE '2015-03-01', DATE '2022-02-28');
+
+INSERT INTO EQUIPMENT (equipmentID, type, isUderWarranty, warrantyStartDate, warrantyEndDate)
+VALUES (3, 'Coffe Machine', 'Yes', DATE '2015-03-01', DATE '2022-02-28');
+
+INSERT INTO EQUIPMENT (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+VALUES (4, 'Drinks Display Unit', 'UNSURE', NULL, NULL);
+
+INSERT INTO EQUIPMENT (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+VALUES (5, 'Oven', 'UNSURE', NULL, NULL);
+
+-- Create 4 tables to group equipment by warranty
+
+CREATE TABLE EQUIPMENT_UNDER_WARRANTY(
+	equipmentID NUMBER(4) PRIMARY KEY,
+	type VARCHAR(50),
+	isUderWarranty VARCHAR(10),
+	warrantyStartDate DATE,
+	warrantyEndDate DATE
+);
+
+CREATE TABLE EQUIPMENT_OUTSIDE_WARRANTY(
+	equipmentID NUMBER(4) PRIMARY KEY,
+	type VARCHAR(50),
+	isUderWarranty VARCHAR(10),
+	warrantyStartDate DATE,
+	warrantyEndDate DATE
+);
+
+CREATE TABLE EQUIPMENT_UNKNOWN_WARRANTY_INFORMATION(
+	equipmentID NUMBER(4) PRIMARY KEY,
+	type VARCHAR(50),
+	isUderWarranty VARCHAR(10),
+	warrantyStartDate DATE,
+	warrantyEndDate DATE
+);
+
+CREATE TABLE NEW_EQUIPMENT_TO_PURCHASE(
+	equipmentID NUMBER(4) PRIMARY KEY,
+	type VARCHAR(50),
+	isUderWarranty VARCHAR(10),
+	warrantyStartDate DATE,
+	warrantyEndDate DATE
+);
+
+
+INSERT FIRST
+
+WHEN isUnderWarranty = 'Yes' THEN
+	INTO EQUIPMENT_UNDER_WARRANTY VALUES (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+
+WHEN isUnderWarranty = 'No' THEN
+	INTO EQUIPMENT_OUTSIDE_WARRANTY VALUES (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+
+WHEN isUnderWarranty = 'UNSURE' THEN
+	INTO EQUIPMENT_UNKNOWN_WARRANTY_INFORMATION VALUES (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+
+WHEN isUnderWarranty = 'UNSURE' THEN
+	INTO EQUIPMENT_UNDER_WARRANTY VALUES (equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate)
+
+SELECT equipmentID, type, isUnderWarranty, warrantyStartDate, warrantyEndDate
+FROM EQUIPMENT;
+
+----------------------------
+--------- Ex4 --------------
+----------------------------
+
+-- Create YOGURT_SALES_GRID table (Source Data)
+
+
+CREATE TABLE YOGURT_SALES_GRID(
+	FLAVOUR VARCHAR(30),
+	EXTRA_LARGE NUMBER,
+	LARGE NUMBER,
+	REGULAR NUMBER,
+	MEDIUM NUMBER,
+	SMALL NUMBER
+);
+
+
+INSERT INTO YOGURT_SALES_GRID (FLAVOUR, EXTRA_LARGE, LARGE, REGULAR, MEDIUM, SMALL)
+VALUES ('Strawberry', 2000, 1599, 1000, 5000, 1289);
+
+INSERT INTO YOGURT_SALES_GRID (FLAVOUR, EXTRA_LARGE, LARGE, REGULAR, MEDIUM, SMALL)
+VALUES ('Pineapple', 2001, 900, 1483, 1243, 2400);
+
+INSERT INTO YOGURT_SALES_GRID (FLAVOUR, EXTRA_LARGE, LARGE, REGULAR, MEDIUM, SMALL)
+VALUES ('Apricot', 1200, 656, 989, 324, 981);
+
+INSERT INTO YOGURT_SALES_GRID (FLAVOUR, EXTRA_LARGE, LARGE, REGULAR, MEDIUM, SMALL)
+VALUES ('Hazelnut', 1402, 431, 1002, 432, 435);
+
+
+-- Create YOGURT_SALES_STATISTICS table (target data)
+CREATE TABLE YOGURT_SALES_STATISTICS(
+	STATSID NUMBER,
+	FLAVOUR VARCHAR2(30),
+	ITEM_SIZE VARCHAR2(30),
+	NO_SOLD NUMBER
+);
+
+-- Create Pivot Table
+
+SELECT * FROM YOGURT_SALES_STATISTICS
+
+INSERT ALL
+	INTO YOGURT_SALES_STATISTICS VALUES (FLAVOUR, EXTRA_LARGE)
+	INTO YOGURT_SALES_STATISTICS VALUES (FLAVOUR, LARGE)
+	INTO YOGURT_SALES_STATISTICS VALUES (FLAVOUR, REGULAR)
+	INTO YOGURT_SALES_STATISTICS VALUES (FLAVOUR, MEDIUM)
+	INTO YOGURT_SALES_STATISTICS VALUES (FLAVOUR, SMALL)
+
+SELECT FLAVOUR, EXTRA_LARGE, LARGE, REGULAR, MEDIUM, SMALL
+FROM YOGURT_SALES_GRID;
+
+SELECT FLAVOUR, ITEM_SIZE FROM TABLE YOGURT_SALES_STATISTICS
+
+

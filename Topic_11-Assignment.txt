@@ -1,0 +1,94 @@
+-- Creating Customer tables
+CREATE TABLE GAMES_CONSOLE_32_BIT(
+	my_id NUMBER(2),
+	title VARCHAR(40),
+	genre VARCHAR(40),
+	manufacturer VARCHAR(40),
+	release_date DATE,
+	myFiveStarRating NUMBER(1)
+);
+
+
+CREATE TABLE GAMES_CONSOLE_64_BIT(
+	my_id NUMBER(2),
+	title VARCHAR(40),
+	genre VARCHAR(40),
+	manufacturer VARCHAR(40),
+	release_date DATE,
+	myFiveStarRating NUMBER(1)
+);
+
+-- Add data to table
+
+INSERT INTO GAMES_CONSOLE_32_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (1,'Double Trouble', 'Beaten up','Mr Cs 32 Bit Console Games','1990-03-23',3);
+
+INSERT INTO GAMES_CONSOLE_32_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (2,'Captain Fantastic', 'Sports','Mr Cs 32 Bit Console Games','1991-07-21',5);
+
+INSERT INTO GAMES_CONSOLE_32_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (3,'Boy in the bubble', 'Adventure','Mr Cs 32 Bit Console Games','1992-06-21',2);
+
+INSERT INTO GAMES_CONSOLE_32_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (4,'Super Fantasy Island Adventure', 'Fantasy','Mr Cs 32 Bit Console Games','1992-01-12',5);
+
+INSERT INTO GAMES_CONSOLE_32_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (5,'Speed Demon', 'Simulation','Mr Cs 32 Bit Console Games','1993-03-13',5);
+
+
+INSERT INTO GAMES_CONSOLE_64_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (1,'Super Fantasy Island Adventure', 'Fantasy','Mr Cs 64 Bit Console Games','1990-03-23',4);
+
+INSERT INTO GAMES_CONSOLE_64_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (2,'South Coast American Sports', 'Sports','Mr Cs 64 Bit Console Games','1991-07-21',1);
+
+INSERT INTO GAMES_CONSOLE_64_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (3,'Road Cycling Champion', 'Sports','Mr Cs 64 Bit Console Games','1992-06-21',1);
+
+INSERT INTO GAMES_CONSOLE_64_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (4,'Captain Fantastic', 'Sports','Mr Cs 64 Bit Console Games','1992-01-12',5);
+
+INSERT INTO GAMES_CONSOLE_64_BIT(my_id, title, genre, manufacturer, release_date, myFiveStarRating)
+VALUES (5,'Speed Demon', 'Simulation','Mr Cs 64 Bit Console Games','1996-02-14',5);
+
+-- Write a query that displays the titles of games in both tables. Include any duplicate titles.
+
+SELECT title FROM GAMES_CONSOLE_32_BIT
+UNION ALL
+SELECT title FROM GAMES_CONSOLE_64_BIT;
+
+-- Write a query that displays the titles of games in both tables but do not include any duplicate titles.
+
+SELECT title FROM GAMES_CONSOLE_32_BIT
+UNION
+SELECT title FROM GAMES_CONSOLE_64_BIT;
+
+-- Write a query that displays only the titles of games that are included in both tables.
+
+SELECT title FROM GAMES_CONSOLE_32_BIT
+INTERSECT
+SELECT title FROM GAMES_CONSOLE_64_BIT;
+
+-- Write a query that displays only the titles of games in the 
+-- GAMES_CONSOLE_32_BIT table, which are not included in the 
+-- GAMES_CONSOLE_64_BIT table.
+SELECT title FROM GAMES_CONSOLE_32_BIT
+MINUS
+SELECT title FROM GAMES_CONSOLE_64_BIT;
+
+
+-- Write a query that displays only the titles of games in the 
+-- GAMES_CONSOLE_64_BIT table, which are not included in the
+-- GAMES_CONSOLE_32_BIT table.
+
+SELECT title FROM GAMES_CONSOLE_64_BIT
+INTERSECT
+SELECT title FROM GAMES_CONSOLE_32_BIT;
+
+-- Write a query that displays the titles and genres of games in both tables but do 
+-- not include any duplicate titles. Order the output by genre.
+
+SELECT title, genre FROM GAMES_CONSOLE_32_BIT
+UNION
+SELECT title, genre FROM GAMES_CONSOLE_64_BIT
+ORDER BY 2;
